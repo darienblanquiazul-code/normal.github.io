@@ -1,0 +1,1082 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inicio | NutriFlow</title>
+
+  <link rel="stylesheet" href="css/estilos.css">
+  <link rel="stylesheet" href="css/promp_stilos.css">
+  <link rel="icon" type="image/svg+xml" href="imagenes/logo.png">
+  <script src="js/menu.js" defer></script>
+  <script src="js/HU_promp.js" defer></script>
+
+  <style>
+    .nf-herramientas { scroll-margin-top: 90px; }
+    .nf-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+    .nf-panel {
+      min-width: 0;
+      padding: 1.5rem;
+      border: 1px solid #dce8df;
+      border-radius: 18px;
+      background: #fff;
+      box-shadow: 0 8px 24px rgba(20, 60, 35, .07);
+    }
+    .nf-panel h3 { margin: .5rem 0; }
+    .nf-formulario {
+      display: grid;
+      gap: .65rem;
+      margin-top: 1rem;
+    }
+    .nf-formulario label { font-weight: 600; }
+    .nf-formulario input,
+    .nf-formulario select,
+    .nf-formulario textarea {
+      width: 100%;
+      box-sizing: border-box;
+      padding: .8rem;
+      border: 1px solid #bdcfc2;
+      border-radius: 9px;
+      font: inherit;
+      background: #fff;
+      color: #24352a;
+    }
+    .nf-formulario input:focus,
+    .nf-formulario select:focus,
+    .nf-formulario textarea:focus {
+      outline: 3px solid rgba(48, 130, 75, .2);
+      border-color: #30824b;
+    }
+    .nf-resultado {
+      margin-top: 1rem;
+      padding: 1rem;
+      border-radius: 12px;
+      background: #f1f7f2;
+      min-height: 70px;
+    }
+    .nf-resultado p { margin: .25rem 0; }
+    .nf-macros {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: .6rem;
+      margin-top: .7rem;
+    }
+    .nf-macro {
+      padding: .7rem;
+      border-radius: 9px;
+      background: #fff;
+    }
+    .nf-macro strong {
+      display: block;
+      font-size: 1.1rem;
+    }
+    .nf-historial-cabecera {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: .75rem;
+      margin-top: 1.3rem;
+    }
+    .nf-historial-cabecera h4 { margin: 0; }
+    .nf-boton-secundario {
+      padding: .5rem .7rem;
+      border: 1px solid #b8cbbd;
+      border-radius: 8px;
+      background: #fff;
+      color: #244b31;
+      cursor: pointer;
+      font: inherit;
+    }
+    .nf-historial {
+      display: grid;
+      gap: .65rem;
+      padding: 0;
+      list-style: none;
+    }
+    .nf-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: .8rem;
+      padding: .8rem;
+      border: 1px solid #e0e9e2;
+      border-radius: 10px;
+    }
+    .nf-item p {
+      margin: .2rem 0 0;
+      overflow-wrap: anywhere;
+    }
+    .nf-eliminar {
+      flex: 0 0 auto;
+      border: 0;
+      background: transparent;
+      color: #a33434;
+      cursor: pointer;
+      text-decoration: underline;
+      font: inherit;
+    }
+    .nf-vacio { color: #66756a; }
+
+    .nf-planes {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    .nf-planes ul {
+      padding-left: 1.2rem;
+      line-height: 1.7;
+    }
+    .nf-precio {
+      margin: 1rem 0 0;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #247344;
+    }
+    .nf-precio small {
+      font-size: .85rem;
+      font-weight: 400;
+      color: #66756a;
+    }
+    .nf-compra {
+      max-width: 760px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .nf-confirmacion {
+      border: 1px solid #b9d9c1;
+      background: #eff8f0;
+    }
+
+    @media (max-width: 760px) {
+      .nf-grid { grid-template-columns: 1fr; }
+      .nf-panel { padding: 1.1rem; }
+    }
+    @media (max-width: 900px) {
+      .nf-planes { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+
+<body>
+<a class="saltar" href="#contenido">Saltar al contenido</a>
+
+<header class="cabecera">
+  <div class="contenedor barra">
+    <a class="marca" href="#inicio" aria-label="NutriFlow, ir al inicio">
+      <img src="imagenes/LOGOSS.png" alt="" width="60" height="60">
+      NutriFlow
+    </a>
+
+    <button id="boton-menu" class="hamburguesa" type="button"
+      aria-controls="navegacion" aria-expanded="false"
+      aria-label="Abrir menú">
+      <span class="lineas" aria-hidden="true">
+        <span></span><span></span><span></span>
+      </span>
+      <span id="texto-menu">Menú</span>
+    </button>
+
+    <nav id="navegacion" class="navegacion"
+      aria-label="Navegación principal">
+      <ul class="menu">
+        <li><a href="#inicio">Inicio</a></li>
+        <li><a href="#nosotros">Nosotros</a></li>
+        <li>
+          <details id="resolver" class="desplegable">
+            <summary>Resolver</summary>
+            <ul class="submenu">
+              <li><a href="#servicios">Servicios</a></li>
+              <li><a href="#orientador">Ver objetos</a></li>
+              <li><a href="#contacto">Solicitar devolución</a></li>
+            </ul>
+          </details>
+        </li>
+        <li><a href="#herramientas">Herramientas</a></li>
+        <li><a href="recursos.html">Video y guía</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="contenido">
+
+  <section id="inicio" class="hero contenedor dos-columnas"
+    aria-labelledby="titulo">
+    <div>
+      <p class="etiqueta">Bienvenidos a nuestro proyecto</p>
+      <h1 id="titulo">Alimentación<br>saludable.</h1>
+      <p>
+        Mejora tus hábitos alimenticios con NutriFlow. Descubre una forma
+        más sencilla de cuidar tu salud mediante una alimentación
+        equilibrada, información nutricional y recomendaciones que
+        promueven el bienestar.
+      </p>
+      <a class="boton" href="#orientador">Adquirir un plan</a>
+      <br>
+      <a class="enlace" href="recursos.html">Conocer la iniciativa</a>
+      <p class="nota">Un caso ficticio para aprender HTML y CSS.</p>
+    </div>
+
+    <figure class="postal">
+      <img class="foto" src="imagenes/alimen.jpg"
+        alt="Mochila preparada para una salida"
+        width="1000" height="667">
+      <figcaption>Una buena practica, una buen alimentacion.</figcaption>
+    </figure>
+  </section>
+
+  <section id="nosotros" class="seccion fondo">
+    <div class="contenedor dos-columnas">
+      <img class="foto" src="imagenes/m.jpg"
+        alt="Productos y puestos de una feria"
+        width="1000" height="667" loading="lazy">
+
+      <div>
+        <p class="etiqueta">Proyectos existentes de la ODS.</p>
+        <p>
+          NUTRIFLOW es una plataforma digital orientada a promover la
+          alimentación saludable y mejorar los hábitos nutricionales.
+          Busca facilitar el acceso a información sobre nutrición,
+          recomendaciones alimenticias y herramientas que ayuden a las
+          personas a cuidar su salud y bienestar.
+        </p>
+
+        <h3>Nuestra propuesta</h3>
+        <p>
+          "Ser una plataforma digital de referencia para fomentar una
+          alimentación equilibrada y un estilo de vida saludable,
+          ofreciendo información nutricional y recomendaciones accesibles
+          que ayuden a las personas a tomar mejores decisiones sobre su
+          alimentación y mejorar su calidad de vida."
+          <br>
+          El proyecto se vincula directamente con el ODS 3: Salud y
+          bienestar, contribuyendo a la promoción de hábitos saludables
+          y a la prevención de enfermedades relacionadas con una
+          alimentación inadecuada.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="consejos" class="seccion contenedor">
+    <p class="etiqueta">ODS 3: Salud y Bienestar</p>
+    <h2>Consejos para una alimentación saludable</h2>
+
+    <div class="carrusel-infinito" id="carrusel" aria-live="polite">
+      <article class="card">
+        <h3>Alimentación equilibrada</h3>
+        <p>
+          Incluye frutas, verduras y proteínas en tus comidas diarias
+          para mantener una buena nutrición.
+        </p>
+      </article>
+
+      <article class="card">
+        <h3>Hidratación</h3>
+        <p>
+          Bebe suficiente agua durante el día para mantener tu
+          organismo hidratado y saludable.
+        </p>
+      </article>
+
+      <article class="card">
+        <h3>Reduce el azúcar</h3>
+        <p>
+          Modera el consumo de bebidas azucaradas y alimentos con
+          exceso de azúcar.
+        </p>
+      </article>
+
+      <article class="card">
+        <h3>Frutas y verduras</h3>
+        <p>
+          Consume alimentos variados y ricos en vitaminas,
+          minerales y fibra.
+        </p>
+      </article>
+
+      <article class="card">
+        <h3>Horarios de comida</h3>
+        <p>
+          Mantén horarios regulares de alimentación y evita
+          saltarte comidas.
+        </p>
+      </article>
+    </div>
+  </section>
+
+  <section id="servicios" class="seccion contenedor">
+    <p class="etiqueta">PEQUEÑOS CAMBIOS, GRANDES BENEFICIOS</p>
+    <h2>De malos hábitos a una vida saludable.</h2>
+
+    <div class="tarjetas">
+      <article class="tarjeta">
+        <span class="numero">01 / Identifica</span>
+        <h3>Conoce tus hábitos alimenticios</h3>
+        <p>
+          Identifica qué alimentos consumes diariamente y reconoce
+          tus hábitos de alimentación.
+        </p>
+        <a href="#orientador">Ver recomendaciones</a>
+      </article>
+
+      <article class="tarjeta">
+        <span class="numero">02 / Mejora</span>
+        <h3>Construye una alimentación equilibrada</h3>
+        <p>
+          Descubre cómo combinar frutas, verduras, proteínas y otros
+          alimentos en tus comidas.
+        </p>
+        <a href="#contacto">Conocer consejos</a>
+      </article>
+
+      <article class="tarjeta">
+        <span class="numero">03 / Mantén</span>
+        <h3>Adopta un estilo de vida saludable</h3>
+        <p>Consulta cómo sería la integración del día a día.</p>
+        <a href="recursos.html">Ver guía saludable</a>
+      </article>
+    </div>
+  </section>
+
+  <!-- HERRAMIENTAS NUTRIFLOW -->
+  <section id="herramientas"
+    class="seccion contenedor nf-herramientas">
+
+    <p class="etiqueta">HERRAMIENTAS NUTRIFLOW</p>
+    <h2>Conoce y registra tu alimentación</h2>
+    <p>
+      Utiliza estas herramientas educativas para consultar valores
+      aproximados y llevar un registro personal de tus comidas.
+    </p>
+
+    <div class="nf-grid">
+
+      <!-- CALCULADORA NUTRICIONAL -->
+      <article class="nf-panel"
+        aria-labelledby="titulo-calculadora">
+
+        <span class="numero">01 / Calculadora</span>
+        <h3 id="titulo-calculadora">Calculadora nutricional</h3>
+        <p>
+          Selecciona un alimento e indica la cantidad para estimar
+          sus nutrientes.
+        </p>
+
+        <form id="form-calculadora" class="nf-formulario">
+          <label for="nf-alimento">Alimento</label>
+
+          <select id="nf-alimento" required>
+            <option value="">Selecciona un alimento</option>
+            <option value="manzana">Manzana</option>
+            <option value="platano">Plátano</option>
+            <option value="arroz">Arroz cocido</option>
+            <option value="pollo">Pechuga de pollo cocida</option>
+            <option value="huevo">Huevo cocido</option>
+            <option value="avena">Avena</option>
+            <option value="brocoli">Brócoli</option>
+          </select>
+
+          <label for="nf-cantidad">Cantidad en gramos</label>
+          <input id="nf-cantidad" type="number"
+            min="1" max="2000" value="100" required>
+
+          <button type="submit" class="boton">
+            Calcular nutrientes
+          </button>
+        </form>
+
+        <div id="nf-resultado" class="nf-resultado"
+          aria-live="polite">
+          <p>Los resultados aparecerán aquí.</p>
+        </div>
+
+        <p class="nota">
+          Valores referenciales por cada 100 g. Pueden variar según
+          la preparación y el alimento. No reemplazan la orientación
+          de un profesional.
+        </p>
+      </article>
+
+      <!-- REGISTRO DE COMIDAS -->
+      <article class="nf-panel"
+        aria-labelledby="titulo-registro">
+
+        <span class="numero">02 / Registro diario</span>
+        <h3 id="titulo-registro">Registra tus comidas</h3>
+        <p>
+          Anota qué comiste y en qué momento del día para consultar
+          tu historial.
+        </p>
+
+        <form id="form-registro" class="nf-formulario">
+          <label for="nf-tipo-comida">Tipo de comida</label>
+
+          <select id="nf-tipo-comida" required>
+            <option value="">Selecciona una opción</option>
+            <option>Desayuno</option>
+            <option>Almuerzo</option>
+            <option>Cena</option>
+            <option>Refrigerio</option>
+          </select>
+
+          <label for="nf-descripcion">Alimentos consumidos</label>
+          <textarea id="nf-descripcion" rows="3"
+            maxlength="180"
+            placeholder="Ejemplo: arroz, pollo y ensalada"
+            required></textarea>
+
+          <button type="submit" class="boton">
+            Guardar comida
+          </button>
+        </form>
+
+        <div class="nf-historial-cabecera">
+          <h4>Historial de comidas</h4>
+          <button type="button" id="nf-limpiar"
+            class="nf-boton-secundario">
+            Borrar historial
+          </button>
+        </div>
+
+        <ul id="nf-historial" class="nf-historial"
+          aria-live="polite">
+          <li class="nf-vacio">
+            Todavía no has registrado comidas.
+          </li>
+        </ul>
+
+        <p class="nota">
+          El historial se guarda únicamente en este navegador
+          mediante el almacenamiento local.
+        </p>
+      </article>
+    </div>
+  </section>
+
+  <!-- PLANES -->
+  <section id="orientador" class="seccion fondo">
+    <div class="contenedor">
+
+      <p class="etiqueta">PLANES NUTRIFLOW</p>
+      <h2>Elige el plan que mejor se adapte a ti</h2>
+      <p>
+        Conoce lo que incluye cada plan, revisa su precio y
+        selecciona el que deseas adquirir.
+      </p>
+
+      <div class="nf-grid nf-planes">
+
+        <article class="nf-panel">
+          <span class="numero">PLAN 01</span>
+          <h3>Plan Base</h3>
+          <p>
+            Ideal para comenzar a mejorar tus hábitos alimenticios.
+          </p>
+          <ul>
+            <li>Consejos generales de alimentación saludable.</li>
+            <li>Orientación para organizar tus comidas.</li>
+            <li>Acceso a la calculadora nutricional.</li>
+          </ul>
+          <p class="nf-precio">
+            S/ 29.90 <small>por mes</small>
+          </p>
+        </article>
+
+        <article class="nf-panel">
+          <span class="numero">PLAN 02</span>
+          <h3>Plan Plus</h3>
+          <p>
+            Para quienes desean una orientación más completa y
+            hacer seguimiento de sus hábitos.
+          </p>
+          <ul>
+            <li>Todo lo incluido en el Plan Base.</li>
+            <li>Ejemplos de menús semanales equilibrados.</li>
+            <li>Seguimiento de tus comidas registradas.</li>
+            <li>Recomendaciones según tus preferencias.</li>
+          </ul>
+          <p class="nf-precio">
+            S/ 49.90 <small>por mes</small>
+          </p>
+        </article>
+
+        <article class="nf-panel">
+          <span class="numero">PLAN 03</span>
+          <h3>Plan Max</h3>
+          <p>
+            Una opción más completa para organizar y revisar
+            tus hábitos alimenticios.
+          </p>
+          <ul>
+            <li>Todo lo incluido en el Plan Plus.</li>
+            <li>Planificación semanal de comidas.</li>
+            <li>Reportes de tu registro alimenticio.</li>
+            <li>Recomendaciones educativas más detalladas.</li>
+          </ul>
+          <p class="nf-precio">
+            S/ 79.90 <small>por mes</small>
+          </p>
+        </article>
+      </div>
+
+      <!-- FORMULARIO DE ADQUISICIÓN -->
+      <div class="nf-panel nf-compra" style="margin-top:1.5rem">
+        <h3>Adquirir un plan</h3>
+        <p>
+          Selecciona una opción para ver el resumen de tu adquisición.
+        </p>
+
+        <form id="form-plan" class="nf-formulario">
+
+          <label for="nf-nombre">Nombres y apellidos</label>
+          <input id="nf-nombre" type="text" maxlength="80"
+            placeholder="Ejemplo: Juan Pérez"
+            autocomplete="name" required>
+
+          <label for="nf-correo">Correo electrónico</label>
+          <input id="nf-correo" type="email"
+            placeholder="ejemplo@correo.com"
+            autocomplete="email" required>
+
+          <label for="nf-telefono">Teléfono</label>
+          <input id="nf-telefono" type="tel"
+            inputmode="tel"
+            pattern="[0-9+()\s-]{7,20}"
+            placeholder="Ejemplo: 987654321"
+            autocomplete="tel" required>
+
+          <label for="nf-plan-seleccion">
+            Selecciona tu plan
+          </label>
+
+          <select id="nf-plan-seleccion" required>
+            <option value="">Elige un plan</option>
+            <option value="base">Plan Base — S/ 29.90</option>
+            <option value="plus">Plan Plus — S/ 49.90</option>
+            <option value="max">Plan Max — S/ 79.90</option>
+          </select>
+
+          <button type="submit" class="boton">
+            Confirmar adquisición
+          </button>
+        </form>
+
+        <div id="nf-confirmacion-plan"
+          class="nf-resultado"
+          aria-live="polite"
+          aria-atomic="true">
+          <p>
+            Tu confirmación aparecerá aquí después de seleccionar
+            un plan.
+          </p>
+        </div>
+
+        <p class="nota">
+          Demostración educativa: los precios son referenciales.
+          No se realiza ningún cobro ni pago real.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="proyectos" class="seccion contenedor">
+    <p class="etiqueta">CÓMO FUNCIONA NUTRIFLOW</p>
+    <h2>
+      Identificamos tus hábitos alimenticios y conocemos tus
+      necesidades nutricionales..
+    </h2>
+
+    <div class="tarjetas">
+      <article class="tarjeta">
+        <h3>Descubrimos</h3>
+        <p>
+          Identificamos tus hábitos alimenticios y conocemos
+          tus necesidades nutricionales.
+        </p>
+      </article>
+
+      <article class="tarjeta">
+        <h3>Te orientamos</h3>
+        <p>
+          Te brindamos recomendaciones nutricionales para mejorar
+          tu alimentación y bienestar.
+        </p>
+      </article>
+
+      <article class="tarjeta">
+        <h3>Mejoramos</h3>
+        <p>
+          Realiza un seguimiento de tus hábitos y adopta
+          progresivamente un estilo de vida más saludable.
+        </p>
+      </article>
+    </div>
+  </section>
+
+  <section id="galeria" class="seccion fondo">
+    <div class="contenedor">
+      <h2>Detrás de cada alimento, una oportunidad.</h2>
+
+      <div class="galeria">
+        <figure>
+          <img src="imagenes/mochila.jpg"
+            alt="Mochila de referencia para la iniciativa"
+            width="1000" height="667" loading="lazy">
+          <figcaption>
+            Pequeños hábitos que mejoran nuestra salud.
+          </figcaption>
+        </figure>
+
+        <figure>
+          <img src="imagenes/feria.jpg"
+            alt="Productos expuestos en una feria"
+            width="1000" height="667" loading="lazy">
+          <figcaption>
+            Una alimentación equilibrada para todos.
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section id="testimonios" class="seccion contenedor">
+    <blockquote>
+      “Comer saludable no se trata de dejar de disfrutar la comida,
+      sino de aprender a cuidar nuestro cuerpo”.
+    </blockquote>
+    <p>Relato ficticio para representar la necesidad del usuario.</p>
+  </section>
+
+  <section id="contacto" class="seccion fondo">
+    <div class="contenedor dos-columnas">
+
+      <div>
+        <p class="etiqueta">Adquirir Plan</p>
+        <h2>Descríbenos que Plan deseas.</h2>
+        <p>
+          Completa datos ficticios para probar el recorrido.
+          En un servicio real, una persona revisaría tu solicitud
+          antes de coordinar una entrega.
+        </p>
+        <p class="nota">
+          Esta práctica no guarda datos ni registra solicitudes.
+          No ingreses información personal real.
+        </p>
+      </div>
+
+      <form action="confirmacion.html" method="get"
+        class="formulario">
+
+        <label for="nombre">Nombre de prueba</label>
+        <input id="nombre" type="text" required
+          maxlength="60" placeholder="Ejemplo: Josue"
+          autocomplete="off">
+
+        <label for="correo">Correo de prueba</label>
+        <input id="correo" type="email" required
+          placeholder="josue@example.com"
+          autocomplete="off">
+
+        <label for="actividad">Objeto que buscas</label>
+        <select id="actividad" required>
+          <option value="">Selecciona una categoría</option>
+          <option>Plan Base</option>
+          <option>Plan Plus</option>
+          <option>Plan Max</option>
+        </select>
+
+        <label for="detalle">Un detalle para reconocerlo</label>
+        <textarea id="detalle" required minlength="8"
+          maxlength="240" rows="3"
+          placeholder="Escribe una característica inventada"></textarea>
+
+        <div>
+          <input id="acepto" type="checkbox" required>
+          <label for="acepto">
+            Entiendo que es una simulación.
+          </label>
+        </div>
+
+        <button type="submit" class="boton">
+          Ver el siguiente paso
+        </button>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<footer class="pie">
+  <div class="contenedor">
+    <p><strong>NutriFlow</strong> · Alimentación saludable</p>
+    <p>Contacto de ejemplo: hola@ejemplo.org</p>
+
+    <nav class="redes" aria-label="Redes sociales de referencia">
+      <a href="https://www.facebook.com/"
+        target="_blank" rel="noopener noreferrer">
+        <img src="iconos/facebook.svg" alt=""
+          width="24" height="24">
+        Facebook
+      </a>
+
+      <a href="https://www.instagram.com/"
+        target="_blank" rel="noopener noreferrer">
+        <img src="iconos/instagram.svg" alt=""
+          width="24" height="24">
+        Instagram
+      </a>
+
+      <a href="https://www.youtube.com/"
+        target="_blank" rel="noopener noreferrer">
+        <img src="iconos/youtube.svg" alt=""
+          width="24" height="24">
+        YouTube
+      </a>
+    </nav>
+
+    <p>
+      © 2026 NutriFlow · Proyecto educativo ficticio ·
+      <a href="FUENTES.txt">Créditos de recursos</a>
+    </p>
+  </div>
+</footer>
+
+<script>
+(() => {
+
+  // CALCULADORA NUTRICIONAL
+  // Datos orientativos por cada 100 gramos.
+  const alimentos = {
+    manzana: {
+      nombre: 'Manzana',
+      kcal: 52,
+      proteinas: 0.3,
+      carbohidratos: 13.8,
+      grasas: 0.2
+    },
+    platano: {
+      nombre: 'Plátano',
+      kcal: 89,
+      proteinas: 1.1,
+      carbohidratos: 22.8,
+      grasas: 0.3
+    },
+    arroz: {
+      nombre: 'Arroz cocido',
+      kcal: 130,
+      proteinas: 2.7,
+      carbohidratos: 28.2,
+      grasas: 0.3
+    },
+    pollo: {
+      nombre: 'Pechuga de pollo cocida',
+      kcal: 165,
+      proteinas: 31,
+      carbohidratos: 0,
+      grasas: 3.6
+    },
+    huevo: {
+      nombre: 'Huevo cocido',
+      kcal: 155,
+      proteinas: 13,
+      carbohidratos: 1.1,
+      grasas: 11
+    },
+    avena: {
+      nombre: 'Avena',
+      kcal: 389,
+      proteinas: 16.9,
+      carbohidratos: 66.3,
+      grasas: 6.9
+    },
+    brocoli: {
+      nombre: 'Brócoli',
+      kcal: 34,
+      proteinas: 2.8,
+      carbohidratos: 6.6,
+      grasas: 0.4
+    }
+  };
+
+  const formCalculadora =
+    document.getElementById('form-calculadora');
+
+  const resultado =
+    document.getElementById('nf-resultado');
+
+  formCalculadora.addEventListener('submit', (evento) => {
+    evento.preventDefault();
+
+    const clave =
+      document.getElementById('nf-alimento').value;
+
+    const cantidad =
+      Number(document.getElementById('nf-cantidad').value);
+
+    if (
+      !alimentos[clave] ||
+      !Number.isFinite(cantidad) ||
+      cantidad <= 0 ||
+      cantidad > 2000
+    ) {
+      resultado.textContent =
+        'Selecciona un alimento e ingresa una cantidad válida (hasta 2000 g).';
+      return;
+    }
+
+    const alimento = alimentos[clave];
+    const factor = cantidad / 100;
+
+    const formato = (valor) =>
+      (valor * factor).toFixed(1);
+
+    resultado.innerHTML = `
+      <p>
+        <strong>${alimento.nombre}</strong>
+        · ${cantidad} g (estimación)
+      </p>
+
+      <div class="nf-macros">
+        <div class="nf-macro">
+          <span>Calorías</span>
+          <strong>${formato(alimento.kcal)} kcal</strong>
+        </div>
+
+        <div class="nf-macro">
+          <span>Proteínas</span>
+          <strong>${formato(alimento.proteinas)} g</strong>
+        </div>
+
+        <div class="nf-macro">
+          <span>Carbohidratos</span>
+          <strong>${formato(alimento.carbohidratos)} g</strong>
+        </div>
+
+        <div class="nf-macro">
+          <span>Grasas</span>
+          <strong>${formato(alimento.grasas)} g</strong>
+        </div>
+      </div>
+    `;
+  });
+
+
+  // REGISTRO DE COMIDAS
+  const CLAVE_HISTORIAL =
+    'nutriflow_historial_comidas';
+
+  const formularioRegistro =
+    document.getElementById('form-registro');
+
+  const listaHistorial =
+    document.getElementById('nf-historial');
+
+  let historial = [];
+
+  try {
+    const guardado =
+      JSON.parse(localStorage.getItem(CLAVE_HISTORIAL) || '[]');
+
+    historial = Array.isArray(guardado) ? guardado : [];
+  } catch (error) {
+    historial = [];
+  }
+
+  function guardarHistorial() {
+    try {
+      localStorage.setItem(
+        CLAVE_HISTORIAL,
+        JSON.stringify(historial)
+      );
+    } catch (error) {
+      // La lista seguirá disponible mientras la página permanezca abierta.
+    }
+  }
+
+  function mostrarHistorial() {
+    listaHistorial.replaceChildren();
+
+    if (historial.length === 0) {
+      const vacio = document.createElement('li');
+      vacio.className = 'nf-vacio';
+      vacio.textContent =
+        'Todavía no has registrado comidas.';
+
+      listaHistorial.appendChild(vacio);
+      return;
+    }
+
+    historial.slice().reverse().forEach((comida) => {
+      const item = document.createElement('li');
+      item.className = 'nf-item';
+
+      const contenido = document.createElement('div');
+
+      const titulo = document.createElement('strong');
+      titulo.textContent =
+        `${comida.tipo} · ${comida.fecha}`;
+
+      const detalle = document.createElement('p');
+      detalle.textContent = comida.descripcion;
+
+      contenido.append(titulo, detalle);
+
+      const eliminar = document.createElement('button');
+      eliminar.type = 'button';
+      eliminar.className = 'nf-eliminar';
+      eliminar.textContent = 'Eliminar';
+
+      eliminar.setAttribute(
+        'aria-label',
+        `Eliminar registro de ${comida.tipo}`
+      );
+
+      eliminar.addEventListener('click', () => {
+        historial = historial.filter(
+          (registro) => registro.id !== comida.id
+        );
+
+        guardarHistorial();
+        mostrarHistorial();
+      });
+
+      item.append(contenido, eliminar);
+      listaHistorial.appendChild(item);
+    });
+  }
+
+  formularioRegistro.addEventListener('submit', (evento) => {
+    evento.preventDefault();
+
+    const tipo =
+      document.getElementById('nf-tipo-comida').value;
+
+    const descripcion =
+      document.getElementById('nf-descripcion').value.trim();
+
+    if (!tipo || descripcion.length < 2) return;
+
+    historial.push({
+      id: `${Date.now()}-${Math.random().toString(16).slice(2)}`,
+      tipo,
+      descripcion,
+      fecha: new Date().toLocaleDateString('es-PE')
+    });
+
+    guardarHistorial();
+    mostrarHistorial();
+    formularioRegistro.reset();
+  });
+
+  document.getElementById('nf-limpiar')
+    .addEventListener('click', () => {
+
+      if (
+        !historial.length ||
+        !window.confirm(
+          '¿Deseas borrar todo el historial de comidas?'
+        )
+      ) {
+        return;
+      }
+
+      historial = [];
+      guardarHistorial();
+      mostrarHistorial();
+    });
+
+  mostrarHistorial();
+
+
+  // SELECCIÓN Y CONFIRMACIÓN DEL PLAN
+  const preciosPlanes = {
+    base: {
+      nombre: 'Plan Base',
+      precio: 29.90
+    },
+    plus: {
+      nombre: 'Plan Plus',
+      precio: 49.90
+    },
+    max: {
+      nombre: 'Plan Max',
+      precio: 79.90
+    }
+  };
+
+  const formularioPlan =
+    document.getElementById('form-plan');
+
+  const confirmacionPlan =
+    document.getElementById('nf-confirmacion-plan');
+
+  formularioPlan.addEventListener('submit', (evento) => {
+    evento.preventDefault();
+
+    // Validar los datos personales antes de confirmar la adquisición.
+    if (!formularioPlan.reportValidity()) return;
+
+    const nombre =
+      document.getElementById('nf-nombre').value.trim();
+
+    const correo =
+      document.getElementById('nf-correo').value.trim();
+
+    const telefono =
+      document.getElementById('nf-telefono').value.trim();
+
+    const opcion =
+      document.getElementById('nf-plan-seleccion').value;
+
+    const plan = preciosPlanes[opcion];
+
+    if (!nombre || !correo || !telefono || !plan) {
+      confirmacionPlan.textContent =
+        'Completa todos tus datos y selecciona un plan válido.';
+      return;
+    }
+
+    // Mostrar la confirmación después de completar el formulario.
+    confirmacionPlan.classList.add('nf-confirmacion');
+    confirmacionPlan.replaceChildren();
+
+    const titulo = document.createElement('h3');
+    titulo.textContent =
+      `¡Genial, ${nombre}! Adquiriste el ${plan.nombre}.`;
+
+    const precio = document.createElement('p');
+    precio.textContent =
+      `El costo de tu plan es S/ ${plan.precio.toFixed(2)} por mes.`;
+
+    const datos = document.createElement('p');
+    datos.textContent =
+      `Correo: ${correo} · Teléfono: ${telefono}.`;
+
+    const detalle = document.createElement('p');
+    detalle.textContent =
+      'Tu solicitud quedó registrada como demostración. No se realizó ningún cobro ni se procesó un pago real.';
+
+    confirmacionPlan.append(
+      titulo,
+      precio,
+      datos,
+      detalle
+    );
+
+    const boton =
+      formularioPlan.querySelector('button[type="submit"]');
+
+    boton.textContent = 'Plan seleccionado';
+    boton.disabled = true;
+  });
+
+})();
+</script>
+
+</body>
+</html>
