@@ -1,0 +1,67 @@
+/* Contenedor con altura fija para alojar elementos absolutos */
+.carrusel-infinito {
+  position: relative;
+  height: 280px; 
+  margin: 1.5rem auto;
+  overflow: hidden;
+  max-width: 900px;
+  cursor: pointer;
+}
+
+/* Estado base de todas las tarjetas (ocultas) */
+.card {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 70%;
+  max-width: 400px;
+  background: white;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  border: 1px solid #dfcbb7;
+  box-shadow: 0 8px 25px #59362220;
+  text-align: center;
+  
+  /* Animación suave al cambiar de estado */
+  transition: transform 0.5s ease, opacity 0.5s ease, left 0.5s ease;
+  
+  /* Centradas pero invisibles por defecto */
+  transform: translate(-50%, -50%) scale(0.7);
+  opacity: 0;
+  z-index: 0;
+}
+
+/* La tarjeta protagonista al centro */
+.card.activa {
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 1;
+  z-index: 3; /* Se coloca por encima de todas */
+}
+
+/* La tarjeta que está por venir (a la derecha) */
+.card.siguiente {
+  left: 75%;
+  transform: translate(-50%, -50%) scale(0.85);
+  opacity: 0.4;
+  z-index: 2;
+}
+
+/* La tarjeta que acaba de pasar (a la izquierda) */
+.card.anterior {
+  left: 25%;
+  transform: translate(-50%, -50%) scale(0.85);
+  opacity: 0.4;
+  z-index: 2;
+}
+
+@media (max-width: 600px) {
+  .carrusel-infinito {
+    height: 320px;
+  }
+  .card {
+    width: 80%;
+  }
+  /* En celular empujamos los laterales más al borde */
+  .card.siguiente { left: 85%; }
+  .card.anterior { left: 15%; }
+}
